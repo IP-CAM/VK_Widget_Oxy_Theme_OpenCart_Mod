@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<id>VK Widget For Oxy Theme Mod, adds VKontakte(vk.com) widget and button</id>
+	<version>1.0.0</version>
+	<vqmver>2.4.0</vqmver>
+	<author>Nikita Solovyev</author>
+	<email></email>
+	<!-- VK Side Widget:start -->
+	<file name="catalog/view/theme/oxy/template/common/header.tpl">
+		<operation>
+			<search position="before"><![CDATA[<?php if($this->config->get('oxy_facebook_likebox_status')== 1) { ?>]]></search>
+			<add><![CDATA[
+				<?php if($this->config->get('oxy_vkontakte_block_status')== 1) { ?>  
+				<?php if($this->config->get('oxy_vkontakte_block_id') != '') { ?>
+				<div class="vkontakte_<?php echo $this->config->get('oxy_vkontakte_block_position'); ?> hide-for-small" <?php if($this->config->get('oxy_vkontakte_block_wide') == 1){echo 'style="'.$this->config->get('oxy_vkontakte_block_position').':-308px;width:308px;"';} ?>>
+				<div id="vkontakte_icon"></div>
+				<div class="vkontakte_box">
+					<script src="http://vk.com/js/api/openapi.js" type="text/javascript"></script>
+					<div id="site_vk_group"></div>
+					<script type="text/javascript">
+						VK.Widgets.Group("site_vk_group", {mode: <?php echo $this->config->get('oxy_vkontakte_block_mode'); ?>, wide: <?php echo $this->config->get('oxy_vkontakte_block_wide'); ?>, width: "237", height: "389", color1: 'FFFFFF', color2: '2B587A', color3: '4D75A3'}, <?php echo $this->config->get('oxy_vkontakte_block_id'); ?>);
+					</script>
+					  <script type="text/javascript">    
+					  $(function(){        
+							$(".vkontakte_right").hover(function(){            
+							$(".vkontakte_right").stop(true, false).animate({right: "0" }, 800, 'easeOutQuint' );        
+							},
+					  function(){            
+							$(".vkontakte_right").stop(true, false).animate({right: "<?php if($this->config->get('oxy_vkontakte_block_wide') == 1){echo '-308';} else {echo '-245';} ?>" }, 800, 'easeInQuint' );        
+							},1000);    
+					  });
+					  $(function(){        
+							$(".vkontakte_left").hover(function(){            
+							$(".vkontakte_left").stop(true, false).animate({left: "0" }, 800, 'easeOutQuint' );        
+							},
+					  function(){            
+							$(".vkontakte_left").stop(true, false).animate({left: "<?php if($this->config->get('oxy_vkontakte_block_wide') == 1){echo '-308';} else {echo '-245';} ?>" }, 800, 'easeInQuint' );        
+							},1000);    
+					  });  
+					  </script>
+				</div>
+				</div>
+				<?php } ?>
+				<?php } ?>
+			]]></add>
+		</operation>	
+	</file>
+	<file name="admin/view/template/module/oxy.tpl">
+		<operation>
+			<search position="after"><![CDATA[<div id="widgets_settings_tabs" class="vtabs">]]></search>
+			<add><![CDATA[
+				<a href="#tab-widgets-vkontakte">Vkontakte Box</a>
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[<div id="tab-widgets-facebook" class="vtabs-content">]]></search>
+			<add><![CDATA[
+				<div id="tab-widgets-vkontakte" class="vtabs-content">   
+				<table class="form">
+
+							<tr>
+								<td><?php echo $text_vkontakte_show; ?></td>
+								<td>
+								<select name="oxy_vkontakte_block_status">
+									<option value="1"<?php if($oxy_vkontakte_block_status == '1') echo ' selected="selected"';?>><?php echo $text_yes; ?></option>
+									<option value="0"<?php if($oxy_vkontakte_block_status == '0') echo ' selected="selected"';?><?php if($oxy_vkontakte_block_status == '') echo ' selected="selected"';?>><?php echo $text_no; ?></option>
+								</select>
+								</td>
+							</tr>   
+							<tr>
+								<td><?php echo $text_vkontakte_id; ?></td>
+								<td><input type="text" name="oxy_vkontakte_block_id" value="<?php echo $oxy_vkontakte_block_id; ?>" />
+								</td>
+							</tr>
+							<tr>
+								<td><?php echo $text_vkontakte_mode; ?></td>
+								<td>			
+								<select name="oxy_vkontakte_block_mode">
+								   <option value="0"<?php if($oxy_vkontakte_block_mode == '0') echo ' selected="selected"';?>><?php echo $text_vkontakte_mode_people; ?></option>
+								   <option value="1"<?php if($oxy_vkontakte_block_mode == '1') echo ' selected="selected"';?>><?php echo $text_vkontakte_mode_name; ?></option>
+								   <option value="2"<?php if($oxy_vkontakte_block_mode == '2') echo ' selected="selected"';?>><?php echo $text_vkontakte_mode_wall; ?></option>								   
+								</select>                        
+								</td>
+							</tr>
+							<tr>
+								<td><?php echo $text_vkontakte_wide; ?></td>
+								<td>			
+								<select name="oxy_vkontakte_block_wide">
+								   <option value="0"<?php if($oxy_vkontakte_block_wide == '0') echo ' selected="selected"';?>><?php echo $text_vkontakte_wide_std; ?></option>
+								   <option value="1"<?php if($oxy_vkontakte_block_wide == '1') echo ' selected="selected"';?>><?php echo $text_vkontakte_wide_photo; ?></option>							   
+								</select>                        
+								</td>
+							</tr> 							
+							<tr>
+								<td><?php echo $text_position; ?></td>
+								<td>			
+								<select name="oxy_vkontakte_block_position">
+								   <option value="right"<?php if($oxy_vkontakte_block_position == 'right') echo ' selected="selected"';?>><?php echo $text_position_r; ?></option>
+								   <option value="left"<?php if($oxy_vkontakte_block_position == 'left') echo ' selected="selected"';?>><?php echo $text_position_l; ?></option>                     
+								</select>                        
+								</td>
+							</tr>                                    
+				 </table>
+				 </div>
+			]]></add>
+		</operation>			
+	</file>
+	<file name="admin/controller/module/oxy.php">
+		<operation>
+			<search position="before"><![CDATA['oxy_facebook_likebox_status',]]></search>
+			<add><![CDATA[
+				'oxy_vkontakte_block_status',	
+				'oxy_vkontakte_block_id',
+				'oxy_vkontakte_block_mode',
+				'oxy_vkontakte_block_wide',
+				'oxy_vkontakte_block_position',	
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$this->data['button_cancel'] = $this->language->get('button_cancel');]]></search>
+			<add><![CDATA[
+				$this->data['text_vkontakte_id'] = $this->language->get('text_vkontakte_id');
+				$this->data['text_vkontakte_mode'] = $this->language->get('text_vkontakte_mode');
+				$this->data['text_vkontakte_mode_people'] = $this->language->get('text_vkontakte_mode_people');
+				$this->data['text_vkontakte_mode_name'] = $this->language->get('text_vkontakte_mode_name');
+				$this->data['text_vkontakte_mode_wall'] = $this->language->get('text_vkontakte_mode_wall');
+				$this->data['text_vkontakte_wide'] = $this->language->get('text_vkontakte_wide');
+				$this->data['text_vkontakte_wide_std'] = $this->language->get('text_vkontakte_wide_std');
+				$this->data['text_vkontakte_wide_photo'] = $this->language->get('text_vkontakte_wide_photo');
+			]]></add>
+		</operation>
+	</file>	
+	<file name="admin/language/english/module/oxy.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_twitter_find_widget_id']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte_id'] = 'Vkontakte group ID:';
+				$_['text_vkontakte_show'] = 'Show Vkontakte Box:';
+				$_['text_vkontakte_mode'] = 'Widget mode:';
+				$_['text_vkontakte_mode_people'] = 'People faces';
+				$_['text_vkontakte_mode_name'] = 'Group name only';
+				$_['text_vkontakte_mode_wall'] = 'Group wall';
+				$_['text_vkontakte_wide'] = 'Widget wide mode:';
+				$_['text_vkontakte_wide_std'] = 'Standard';
+				$_['text_vkontakte_wide_photo'] = 'With group photo and Like button';
+			]]></add>
+		</operation>	
+	</file>
+	<file name="admin/language/russian/module/oxy.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_twitter_find_widget_id']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte_id'] = 'Идентификатор группы ВКонтакте:';
+				$_['text_vkontakte_show'] = 'Показывать блок Vkontakte:';
+				$_['text_vkontakte_mode'] = 'Режим:';
+				$_['text_vkontakte_mode_people'] = 'Участники сообщества';
+				$_['text_vkontakte_mode_name'] = 'Только название сообщества';
+				$_['text_vkontakte_mode_wall'] = 'Стена сообщества';
+				$_['text_vkontakte_wide'] = 'Режим ширины:';
+				$_['text_vkontakte_wide_std'] = 'Стандартный';
+				$_['text_vkontakte_wide_photo'] = 'С фото сообщества и "мне нравится"';
+			]]></add>
+		</operation>	
+	</file>
+	<!-- VK Side Widget:end -->
+	<!-- VK Share (Bottom):start -->
+	<file name="catalog/view/theme/oxy/template/common/footer.tpl">
+		<operation>
+			<search position="before"><![CDATA[<?php if($this->config->get('oxy_facebook') != '') { ?>]]></search>
+			<add><![CDATA[
+				<?php if($this->config->get('oxy_vkontakte') != '') { ?>
+				<li class="vkontakte"><a href="<?php echo $this->config->get('oxy_vkontakte'); ?>" class="tiptip" title="<?php echo $text_vkontakte; ?>" target="_blank"><?php echo $text_vkontakte; ?></a></li>
+				<?php } ?>	
+			]]></add>
+		</operation>	
+	</file>
+	<file name="admin/view/template/module/oxy.tpl">
+		<operation>
+			<search position="before" offset="1"><![CDATA[<td>Facebook:</td>]]></search>
+			<add><![CDATA[
+				<tr>
+					<td>Vkontakte:</td>
+					<td><input type="text" name="oxy_vkontakte" value="<?php echo $oxy_vkontakte; ?>" /></td>
+				</tr>
+			]]></add>
+		</operation>	
+	</file>
+	<file name="admin/controller/module/oxy.php">
+		<operation>
+			<search position="after"><![CDATA['oxy_follow_us_status',]]></search>
+			<add><![CDATA[
+				'oxy_vkontakte',
+			]]></add>
+		</operation>
+		<operation>
+			<search position="after"><![CDATA[$this->data['button_cancel'] = $this->language->get('button_cancel');]]></search>
+			<add><![CDATA[
+				$this->data['text_vkontakte_share'] = $this->language->get('text_vkontakte_share');
+			]]></add>
+		</operation>
+	</file>
+	<file name="catalog/controller/common/footer.php">
+		<operation>
+			<search position="after"><![CDATA[$this->data['text_newsletter'] = $this->language->get('text_newsletter');]]></search>
+			<add><![CDATA[
+				$this->data['text_vkontakte'] = $this->language->get('text_vkontakte');
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/english/module/oxy.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_twitter_find_widget_id']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte_share'] = 'VKontakte:';
+			]]></add>
+		</operation>	
+	</file>
+	<file name="admin/language/russian/module/oxy.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_twitter_find_widget_id']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte_share'] = 'ВКонтакте:';
+			]]></add>
+		</operation>	
+	</file>
+	<file name="catalog/language/english/english.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_home']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte'] = 'VK';
+			]]></add>
+		</operation>	
+	</file>
+	<file name="catalog/language/russian/russian.php">
+		<operation>
+			<search position="after"><![CDATA[$_['text_home']]]></search>
+			<add><![CDATA[
+				$_['text_vkontakte'] = 'ВКонтакте';
+			]]></add>
+		</operation>	
+	</file>
+	<!-- VK Share (Bottom):end -->
+</modification>

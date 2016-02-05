@@ -1,0 +1,151 @@
+﻿To 'catalog\view\theme\oxy\stylesheet\stylesheet.css' before:
+
+	#footer_a .social_widget ul li.facebook {
+	    background-image: url("../image/follow_us/icon-facebook-38.png");
+	}
+
+add:
+
+	#footer_a .social_widget ul li.vkontakte {
+	    background-image: url("../image/follow_us/icon-vkontakte-38.png");
+	}
+
+and before:
+
+	#footer_a .social_widget ul li.facebook:hover {
+	    background-color: #4D75A3;
+	}
+
+add:
+
+	#footer_a .social_widget ul li.vkontakte:hover {
+	    background-color: #4D75A3;
+	}
+
+
+
+
+To 'catalog\view\theme\oxy\stylesheet\stylesheet.css' before:
+
+	/*  Facebook Likebox Widget  */
+
+	.facebook_left {
+
+add:
+
+	/* Vkontakte widget */
+	.vkontakte_left {
+	    width: 245px;
+	    height: 389px;
+	    position: fixed;
+            left: -245px;
+	    top: 148px;	
+	    z-index: 100000;
+	}
+	.vkontakte_right {
+	    width: 245px;
+	    height: 389px;
+	    position: fixed;
+	    right: -245px;
+	    top: 148px;
+	    z-index: 100000;
+	}	
+	.vkontakte_left #vkontakte_icon {
+	    float: right;
+	    height: 54px;
+	    width: 46px;
+	    right: -46px;
+	    background: url("../image/vkontakte_lb_l.png") no-repeat;
+	    cursor: pointer;	
+	    position: relative;	
+	    z-index: 100001;	
+	}
+	.vkontakte_right #vkontakte_icon {
+	    float: left;
+	    height: 54px;
+	    width: 46px;
+	    left: -46px;
+	    background: url("../image/vkontakte_lb_r.png") no-repeat;
+	    cursor: pointer;
+	    position: relative;	
+    	    z-index: 100001;	
+	}
+	.vkontakte_right .vkontakte_box {
+    	    background-color: #FFFFFF;
+	    border: 4px solid #4D75A3;
+	    float: right;
+	    top: -54px;
+	    position: relative;
+	    z-index: 100002;		
+	}
+	.vkontakte_left .vkontakte_box {
+	    background-color: #FFFFFF;
+	    border: 4px solid #4D75A3;
+	    float: left;
+	    top: -54px;
+	    position: relative;	
+	    z-index: 100002;		
+	}
+
+
+
+
+Depending on changes to standard CSS rewrite of the following calculations might be required in 'catalog\view\theme\oxy\stylesheet\stylesheet.css':
+
+	.facebook_left + .video_box_left, .twitter_left + .video_box_left, .facebook_left + .twitter_right + .video_box_left {
+	    top: 203px;
+	}
+	.facebook_left + .twitter_left + .video_box_left {
+	    top: 258px;
+	}
+
+i.e.:
+
+	.vkontakte_left + .facebook_left {
+		top: 203px;
+	}
+	.vkontakte_right + .facebook_right {
+		top: 203px;
+	}
+
+	.vkontakte_left + .twitter_left, .facebook_left + .twitter_left, .vkontakte_left + .facebook_right + .twitter_left {
+		top: 203px;
+	}
+	.vkontakte_left + .facebook_left + .twitter_left {
+		top: 258px;
+	}
+
+	.vkontakte_right + .twitter_right, .facebook_right + .twitter_right, .vkontakte_right + .facebook_left + .twitter_right {
+		top: 203px;
+	}
+	.vkontakte_right + .facebook_right + .twitter_right {
+		top: 258px;
+	}
+
+	.vkontakte_left + .video_box_left, .facebook_left + .video_box_left, .twitter_left + .video_box_left, .vkontakte_left + .facebook_right + .video_box_left, .vkontakte_left + .twitter_right + .video_box_left, .vkontakte_right + .facebook_left + .twitter_right + .video_box_left, .vkontakte_left + .facebook_right + .twitter_right + .video_box_left, .facebook_left + .twitter_right + .video_box_left {
+		top: 203px;
+	}
+	.vkontakte_left + .facebook_left + .video_box_left, .vkontakte_left + .twitter_left + .video_box_left, .facebook_left + .twitter_left + .video_box_left, .vkontakte_left + .facebook_right + .twitter_left + .video_box_left, .vkontakte_left + .facebook_left + .twitter_right + .video_box_left {
+		top: 258px;
+	}
+	.vkontakte_left + .facebook_left + .twitter_left + .video_box_left {
+		top: 313px;
+	}
+
+	.vkontakte_right + .video_box_right, .facebook_right + .video_box_right, .twitter_right + .video_box_right, .vkontakte_right + .facebook_left + .video_box_right, .vkontakte_right + .twitter_left + .video_box_right, .vkontakte_left + .facebook_right + .twitter_left + .video_box_right, .vkontakte_right + .facebook_left + .twitter_left + .video_box_right, .facebook_right + .twitter_left + .video_box_right {
+		top: 203px;
+	}
+	.vkontakte_right + .facebook_right + .video_box_right, .vkontakte_right + .twitter_right + .video_box_right, .facebook_right + .twitter_right + .video_box_right, .vkontakte_right + .facebook_left + .twitter_right + .video_box_right, .vkontakte_right + .facebook_right + .twitter_left + .video_box_right {
+		top: 258px;
+	}
+	.vkontakte_right + .facebook_right + .twitter_right + .video_box_right {
+		top: 313px;
+	}
+
+	.vkontakte_left + .facebook_left + .twitter_left + .video_box_left + .custom_box_left {
+		top: 368px;
+	}
+
+	.vkontakte_right + .facebook_right + .twitter_right + .video_box_right + .custom_box_right {
+		top: 368px;
+	}
